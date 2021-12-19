@@ -17,7 +17,11 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 
 SOURCES += \
         src/main.cpp \
-        src/fake_advertiser.cpp
+        src/fake_advertiser.cpp \
+        src/player_prober.cpp \
+        src/aopacket.cpp
 
 HEADERS += \
-        include/fake_advertiser.h
+        include/fake_advertiser.h \
+        include/player_prober.h \
+        include/aopacket.h

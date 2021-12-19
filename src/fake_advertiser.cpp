@@ -1,5 +1,6 @@
 #include "include/fake_advertiser.h"
 
+
 FakeAdvertiser::FakeAdvertiser(QObject *parent) :
     QObject(parent)
 {
@@ -12,7 +13,10 @@ FakeAdvertiser::FakeAdvertiser(QObject *parent) :
            this, &FakeAdvertiser::msAdvertiseServer);
    m_advertisement_timer->setInterval(300000);
    m_advertisement_timer->start();
-   msAdvertiseServer();
+
+   m_player_prober = new PlayerProber(this, m_ipaddress, m_port);
+   connect(m_player_prober, &PlayerProber::updatePlayers,
+           this, &FakeAdvertiser::msUpdatePlayers);
 }
 
 FakeAdvertiser::~FakeAdvertiser()
@@ -75,4 +79,12 @@ void FakeAdvertiser::msRequestFinished(QNetworkReply *f_reply)
         }
     }
     f_reply->deleteLater();
+}
+
+void FakeAdvertiser::msUpdatePlayers(int f_players)
+{
+    m_players = f_players;
+    msAdvertiseServer();
+    m_advertisement_timer->setInterval(300000);
+    m_advertisement_timer->start();
 }

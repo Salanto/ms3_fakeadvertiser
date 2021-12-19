@@ -3,6 +3,8 @@
 #include <QtNetwork>
 #include <QObject>
 
+#include "include/player_prober.h"
+
 class FakeAdvertiser : public QObject {
     Q_OBJECT
 
@@ -23,6 +25,11 @@ public slots:
      * @param reply Response data from the masterserver. Information contained is send to the console if debug is enabled.
      */
     void msRequestFinished(QNetworkReply *f_reply);
+
+    /**
+     * @brief Updates the playercount for sorting on the ms3 masterserver.
+     */
+    void msUpdatePlayers(int f_players);
 
 private:
 
@@ -64,7 +71,7 @@ private:
     /**
      * @brief Advertised IP Address to masterserver
      */
-    QString m_ipaddress = "83.136.252.90";
+    QString m_ipaddress = "aohdf5.mooo.com";
 
     /**
      * @brief Controls if network replies are printed to console. Should only be true if issues communicating with masterserver appear.
@@ -75,6 +82,8 @@ private:
      * @brief Timer to advertise the server every 5 minutes
      */
     QTimer* m_advertisement_timer;
+
+    PlayerProber* m_player_prober;
 };
 
 #endif //FAKE_ADVERTISER_H
